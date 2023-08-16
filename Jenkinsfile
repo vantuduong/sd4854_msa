@@ -22,7 +22,6 @@ pipeline {
             steps {
                 script{
                     docker.withRegistry('https://258591199682.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:aws-credentials') {
-                        frontendApp.push("${env.BUILD_NUMBER}")
                         frontendApp.push("latest")
                     }
                 }
@@ -39,7 +38,6 @@ pipeline {
             steps {
                 script{
                     docker.withRegistry('https://258591199682.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:aws-credentials') {
-                        backendApp.push("${env.BUILD_NUMBER}")
                         backendApp.push("latest")
                     }
                 }
@@ -47,41 +45,28 @@ pipeline {
         }
 
         stage('Deploy mongo db'){
-            steps {
-                script{
-                    kubeconfig(credentialsId: 'kubernetesCredential', serverUrl: '') {
-                        sh 'kubectl apply -f mongodb.yaml'
-                        sh 'kubectl get pod'
-                        sh 'kubectl get service'
-                    }
-                }
-            }
+            withKubeConfig(credentialsId: 'keberneteCredential', serverUrl: '') {
+               sh 'kubectl apply -f mongodb.yaml'
+               sh 'kubectl get pod'
+               sh 'kubectl get service'
+           }
         }
 
         stage('Deploy backend'){
-            steps {
-                script{
-                    kubeconfig(credentialsId: 'kubernetesCredential', serverUrl: '') {
-                        sh 'kubectl apply -f backend.yaml'
-                        sh 'kubectl get pod'
-                        sh 'kubectl get service'
-                    }
-                }
+            withKubeConfig(credentialsId: 'keberneteCredential', serverUrl: '') {
+                sh 'kubectl apply -f backend.yaml'
+                sh 'kubectl get pod'
+                sh 'kubectl get service'
             }
         }
 
         stage('Deploy frontend'){
-            steps {
-                script{
-                    kubeconfig(credentialsId: 'kubernetesCredential', serverUrl: '') {
-                        sh 'kubectl apply -f frontend.yaml'
-                        sh 'kubectl get pod'
-                        sh 'kubectl get service'
-                        sh 'kubectl port-forward service/frontend 3000:3000'
-                    }
-                }
-            }
-
+           withKubeConfig(credentialsId: 'keberneteCredential', serverUrl: '') {
+               sh 'kubectl apply -f frontend.yaml'
+               sh 'kubectl get pod'
+               sh 'kubectl get service'
+               sh 'kubectl port-forward service/frontend 3000:3000'
+           }
         }
     }
 }
