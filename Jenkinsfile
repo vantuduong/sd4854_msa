@@ -14,7 +14,7 @@ pipeline {
         stage('Build frontend') {
             steps {
                 script{
-                    frontendApp = docker.build("devops-jenkins", "-f src/frontend/Dockerfile src/frontend")
+                    frontendApp = docker.build("devops-jenkins-frontend", "-f src/frontend/Dockerfile src/frontend")
                 }
             }
         }
