@@ -38,7 +38,7 @@ pipeline {
                 }
             }
         }
-        stage('Push frontend image'){
+        stage('Push backend image'){
             steps {
                 script{
                     docker.withRegistry('$REGISTRY_URL', 'ecr:ap-southeast-1:aws-credentials') {
