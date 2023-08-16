@@ -1,8 +1,5 @@
 pipeline {
     agent any
-    environment {
-        REGISTRY_URL = 'https://258591199682.dkr.ecr.ap-southeast-1.amazonaws.com'
-    }
     options {
         skipStagesAfterUnstable()
     }
@@ -17,14 +14,14 @@ pipeline {
         stage('Build frontend') {
             steps {
                 script{
-                    frontendApp = docker.build("devops-jenkins/frontend", "-f src/frontend/Dockerfile src/frontend")
+                    frontendApp = docker.build("devops-jenkins", "-f src/frontend/Dockerfile src/frontend")
                 }
             }
         }
         stage('Push frontend image'){
             steps {
                 script{
-                    docker.withRegistry('$REGISTRY_URL', 'ecr:ap-southeast-1:aws-credentials') {
+                    docker.withRegistry('https://258591199682.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:aws-credentials') {
                         frontendApp.push("${env.BUILD_NUMBER}")
                         frontendApp.push("latest")
                     }
@@ -34,14 +31,14 @@ pipeline {
         stage('Build backend') {
             steps {
                 script{
-                    backendApp = docker.build("devops-jenkins/backend", "-f src/backend/Dockerfile src/backend")
+                    backendApp = docker.build("jenkins-devops-backend", "-f src/backend/Dockerfile src/backend")
                 }
             }
         }
         stage('Push backend image'){
             steps {
                 script{
-                    docker.withRegistry('$REGISTRY_URL', 'ecr:ap-southeast-1:aws-credentials') {
+                    docker.withRegistry('https://258591199682.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:aws-credentials') {
                         backendApp.push("${env.BUILD_NUMBER}")
                         backendApp.push("latest")
                     }

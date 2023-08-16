@@ -28,7 +28,7 @@ spec:
     spec:
       containers:
         - name: frontend
-          image: 258591199682.dkr.ecr.ap-southeast-1.amazonaws.com/devops-jenkins/frontend:latest
+          image: 258591199682.dkr.ecr.ap-southeast-1.amazonaws.com/devops-jenkins:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 3000
