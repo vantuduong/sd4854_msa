@@ -30,7 +30,7 @@ pipeline {
         stage('Build backend') {
             steps {
                 script{
-                    backendApp = docker.build("jenkins-devops-backend", "-f src/backend/Dockerfile src/backend")
+                    backendApp = docker.build("devops-jenkins-backend", "-f src/backend/Dockerfile src/backend")
                 }
             }
         }
