@@ -46,7 +46,7 @@ pipeline {
 
         stage('Deploy mongo db'){
             steps {
-                withKubeConfig(credentialsId: 'keberneteCredential', serverUrl: '') {
+                withKubeConfig(credentialsId: 'aws-credentials', serverUrl: 'https://9C4A6F6E42EE6E54C497488401FFAEF2.gr7.ap-southeast-1.eks.amazonaws.com') {
                    sh 'kubectl apply -f mongodb.yaml'
                    sh 'kubectl get pod'
                    sh 'kubectl get service'
@@ -56,7 +56,7 @@ pipeline {
 
         stage('Deploy backend'){
             steps {
-                withKubeConfig(credentialsId: 'keberneteCredential', serverUrl: '') {
+                withKubeConfig(credentialsId: 'aws-credentials', serverUrl: 'https://9C4A6F6E42EE6E54C497488401FFAEF2.gr7.ap-southeast-1.eks.amazonaws.com') {
                     sh 'kubectl apply -f backend.yaml'
                     sh 'kubectl get pod'
                     sh 'kubectl get service'
@@ -66,7 +66,7 @@ pipeline {
 
         stage('Deploy frontend'){
             steps {
-                withKubeConfig(credentialsId: 'keberneteCredential', serverUrl: '') {
+                withKubeConfig(credentialsId: 'aws-credentials', serverUrl: 'https://9C4A6F6E42EE6E54C497488401FFAEF2.gr7.ap-southeast-1.eks.amazonaws.com') {
                    sh 'kubectl apply -f frontend.yaml'
                    sh 'kubectl get pod'
                    sh 'kubectl get service'
