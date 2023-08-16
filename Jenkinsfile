@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     environment {
         REGISTRY_URL = 'https://258591199682.dkr.ecr.ap-southeast-1.amazonaws.com'
     }
