@@ -83,7 +83,6 @@ pipeline {
                     sh 'kubectl apply -f ingress.yml'
                     sh 'kubectl get ingress -o wide'
                }
-
             }
         }
     }
