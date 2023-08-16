@@ -50,28 +50,41 @@ pipeline {
         }
 
         stage('Deploy mongo db'){
-            kubeconfig(credentialsId: 'kubernetesCredential', serverUrl: '') {
-                sh 'kubectl apply -f mongodb.yaml'
-                sh 'kubectl get pod'
-                sh 'kubectl get service'
+            steps {
+                script{
+                    kubeconfig(credentialsId: 'kubernetesCredential', serverUrl: '') {
+                        sh 'kubectl apply -f mongodb.yaml'
+                        sh 'kubectl get pod'
+                        sh 'kubectl get service'
+                    }
+                }
             }
         }
 
         stage('Deploy backend'){
-            kubeconfig(credentialsId: 'kubernetesCredential', serverUrl: '') {
-                sh 'kubectl apply -f backend.yaml'
-                sh 'kubectl get pod'
-                sh 'kubectl get service'
+            steps {
+                script{
+                    kubeconfig(credentialsId: 'kubernetesCredential', serverUrl: '') {
+                        sh 'kubectl apply -f backend.yaml'
+                        sh 'kubectl get pod'
+                        sh 'kubectl get service'
+                    }
+                }
             }
         }
 
         stage('Deploy frontend'){
-            kubeconfig(credentialsId: 'kubernetesCredential', serverUrl: '') {
-                sh 'kubectl apply -f frontend.yaml'
-                sh 'kubectl get pod'
-                sh 'kubectl get service'
-                sh 'kubectl port-forward service/frontend 3000:3000'
+            steps {
+                script{
+                    kubeconfig(credentialsId: 'kubernetesCredential', serverUrl: '') {
+                        sh 'kubectl apply -f frontend.yaml'
+                        sh 'kubectl get pod'
+                        sh 'kubectl get service'
+                        sh 'kubectl port-forward service/frontend 3000:3000'
+                    }
+                }
             }
+
         }
     }
 }
