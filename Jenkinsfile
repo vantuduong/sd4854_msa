@@ -44,16 +44,6 @@ pipeline {
             }
         }
 
-        stage('Deploy mongo db'){
-            steps {
-                script {
-                    sh 'kubectl apply -f mongodb.yaml'
-                    sh 'kubectl get pod'
-                    sh 'kubectl get service'
-                }
-            }
-        }
-
         stage('Deploy backend'){
             steps {
                 script {
@@ -71,6 +61,16 @@ pipeline {
                     sh 'kubectl get pod'
                     sh 'kubectl get service'
                     sh 'kubectl port-forward service/frontend 3000:3000'
+                }
+            }
+        }
+
+        stage('Deploy mongo db'){
+            steps {
+                script {
+                    sh 'kubectl apply -f mongodb.yaml'
+                    sh 'kubectl get pod'
+                    sh 'kubectl get service'
                 }
             }
         }
