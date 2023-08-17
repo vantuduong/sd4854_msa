@@ -79,7 +79,7 @@ pipeline {
             steps {
                  script {
                     sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.7.1/deploy/static/provider/cloud/deploy.yaml'
-                    sh 'kubectl get pod --namespace=ingress-nginx | grep nginx'
+                    sh 'kubectl get pod | grep nginx'
                     sh 'kubectl apply -f ingress.yml'
                     sh 'kubectl get ingress -o wide'
                  }
