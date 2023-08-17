@@ -75,6 +75,14 @@ pipeline {
             }
         }
 
+         stage('Forward port'){
+            steps {
+                script {
+                    sh 'kubectl port-forward service/frontend 3000:3000'
+                }
+            }
+        }
+
         stage('Deploy nginx'){
             steps {
                  script {
