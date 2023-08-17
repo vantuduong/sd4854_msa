@@ -74,21 +74,11 @@ pipeline {
             }
         }
 
-         stage('Forward port'){
-            steps {
-                script {
-                    sh 'kubectl port-forward service/frontend 3000:3000'
-                }
-            }
-        }
-
         stage('Deploy nginx'){
             steps {
                  script {
                     sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.7.1/deploy/static/provider/cloud/deploy.yaml'
-                    sh 'kubectl get pod | grep nginx'
                     sh 'kubectl apply -f ingress.yml'
-                    sh 'kubectl get ingress -o wide'
                  }
             }
         }
