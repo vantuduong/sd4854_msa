@@ -60,7 +60,6 @@ pipeline {
                     sh 'kubectl apply -f frontend.yaml'
                     sh 'kubectl get pod'
                     sh 'kubectl get service'
-                    sh 'kubectl port-forward service/frontend 3000:3000'
                 }
             }
         }
