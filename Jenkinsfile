@@ -73,14 +73,5 @@ pipeline {
                 }
             }
         }
-
-        stage('Deploy nginx'){
-            steps {
-                 script {
-                    sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.7.1/deploy/static/provider/cloud/deploy.yaml'
-                    sh 'kubectl apply -f ingress.yml'
-                 }
-            }
-        }
     }
 }
