@@ -17,8 +17,6 @@ RUN npm ci
 # Get all the code needed to run the app
 COPY . /usr/src/app
 
-RUN npm run dev
-
 # Expose the port the app runs in
 EXPOSE 3000
 
