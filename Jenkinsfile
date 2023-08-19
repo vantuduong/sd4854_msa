@@ -63,14 +63,6 @@ pipeline {
             }
         }
 
-        stage('Deploy mongo db'){
-            steps {
-                script {
-                    sh 'kubectl apply -f mongodb.yaml'
-                    sh 'kubectl get pod'
-                    sh 'kubectl get service'
-                }
-            }
-        }
+
     }
 }
