@@ -22,7 +22,7 @@ pipeline {
             steps {
                 script{
                     docker.withRegistry('https://258591199682.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:aws-credentials') {
-                        frontendApp.push("latest")
+                        frontendApp.push("v1")
                     }
                 }
             }
@@ -43,26 +43,5 @@ pipeline {
                 }
             }
         }
-        stage('Deploy backend'){
-            steps {
-                script {
-                    sh 'kubectl apply -f backend.yaml'
-                    sh 'kubectl get pod'
-                    sh 'kubectl get service'
-                }
-            }
-        }
-
-        stage('Deploy frontend'){
-            steps {
-                script {
-                    sh 'kubectl apply -f frontend.yaml'
-                    sh 'kubectl get pod'
-                    sh 'kubectl get service'
-                }
-            }
-        }
-
-
     }
 }
