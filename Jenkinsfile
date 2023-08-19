@@ -43,7 +43,6 @@ pipeline {
                 }
             }
         }
-
         stage('Deploy backend'){
             steps {
                 script {
