@@ -43,5 +43,44 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy backend'){
+            steps {
+                script {
+                    sh 'kubectl apply -f backend.yaml'
+                    sh 'kubectl get pod'
+                    sh 'kubectl get service'
+                }
+            }
+        }
+
+        stage('Deploy frontend'){
+            steps {
+                script {
+                    sh 'kubectl apply -f frontend.yaml'
+                    sh 'kubectl get pod'
+                    sh 'kubectl get service'
+                }
+            }
+        }
+
+        stage('Deploy mongo db'){
+            steps {
+                script {
+                    sh 'kubectl apply -f mongodb.yaml'
+                    sh 'kubectl get pod'
+                    sh 'kubectl get service'
+                }
+            }
+        }
+
+        stage('Deploy nginx'){
+            steps {
+                 script {
+                    sh 'kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.7.1/deploy/static/provider/cloud/deploy.yaml'
+                    sh 'kubectl apply -f ingress.yml'
+                 }
+            }
+        }
     }
 }
