@@ -1,2 +1,2 @@
-mongodb.yaml
-ingress.yml
+documents/mongodb.yaml
+documents/ingress.yml
