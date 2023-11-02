@@ -6,7 +6,7 @@ name: backend
 
 # Image repository and tag for the backend container
 image:
-  repository: hnguyencanh/backend
+  repository: 258591199682.dkr.ecr.ap-southeast-1.amazonaws.com/devops-jenkins-backend
   tag: latest
 
 # Port for the backend service
