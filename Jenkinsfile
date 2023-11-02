@@ -12,16 +12,18 @@ pipeline {
             }
         }
         stage ("Trivy Scan Secret") {
-            script {
-                sh "trivy fs . --scanners secret --exit-code 0 --format template --template @trivy/html.tpl -o .trivy/secretreport.html"
-                publishHTML (target : [allowMissing: true,
-                    alwaysLinkToLastBuild: true,
-                    keepAll: true,
-                    reportDir: 'trivy',
-                    reportFiles: 'secretreport.html',
-                    reportName: 'Trivy Secrets Report',
-                    reportTitles: 'Trivy Secrets Report']
-                )
+            steps {
+                script {
+                    sh "trivy fs . --scanners secret --exit-code 0 --format template --template @trivy/html.tpl -o .trivy/secretreport.html"
+                    publishHTML (target : [allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'trivy',
+                        reportFiles: 'secretreport.html',
+                        reportName: 'Trivy Secrets Report',
+                        reportTitles: 'Trivy Secrets Report']
+                    )
+                }
             }
         }
 
@@ -35,15 +37,19 @@ pipeline {
         }
 
         stage ("Trivy Scan Frontend Images") {
-            sh "trivy image --scanners vuln,config --exit-code 0 --severity HIGH,CRITICAL --format template --template @trivy/html.tpl -o trivy/frontendImageReport.html devops-jenkins-frontend:latest"
-            publishHTML (target : [allowMissing: true,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'trivy',
-                reportFiles: 'frontendImageReport.html',
-                reportName: 'Trivy Vulnerabilities Frontend Images Report',
-                reportTitles: 'Trivy Vulnerabilities Frontend Images Report']
-            )
+            steps {
+                script {
+                    sh "trivy image --scanners vuln,config --exit-code 0 --severity HIGH,CRITICAL --format template --template @trivy/html.tpl -o trivy/frontendImageReport.html devops-jenkins-frontend:latest"
+                    publishHTML (target : [allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'trivy',
+                        reportFiles: 'frontendImageReport.html',
+                        reportName: 'Trivy Vulnerabilities Frontend Images Report',
+                        reportTitles: 'Trivy Vulnerabilities Frontend Images Report']
+                    )
+                }
+            }
         }
 
         stage('Build backend') {
@@ -55,15 +61,19 @@ pipeline {
         }
 
          stage ("Trivy Scan Backend Images") {
-            sh "trivy image --scanners vuln,config --exit-code 0 --severity HIGH,CRITICAL --format template --template @trivy/html.tpl -o trivy/backendImageReport.html devops-jenkins-backend:latest"
-            publishHTML (target : [allowMissing: true,
-                alwaysLinkToLastBuild: true,
-                keepAll: true,
-                reportDir: 'trivy',
-                reportFiles: 'backendImageReport.html',
-                reportName: 'Trivy Vulnerabilities Backend Images Report',
-                reportTitles: 'Trivy Vulnerabilities Backend Images Report']
-            )
+             steps {
+                script {
+                    sh "trivy image --scanners vuln,config --exit-code 0 --severity HIGH,CRITICAL --format template --template @trivy/html.tpl -o trivy/backendImageReport.html devops-jenkins-backend:latest"
+                    publishHTML (target : [allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'trivy',
+                        reportFiles: 'backendImageReport.html',
+                        reportName: 'Trivy Vulnerabilities Backend Images Report',
+                        reportTitles: 'Trivy Vulnerabilities Backend Images Report']
+                    )
+                }
+             }
         }
 
         stage('Push frontend image'){
