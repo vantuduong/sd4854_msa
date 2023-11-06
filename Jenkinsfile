@@ -31,7 +31,6 @@ pipeline {
             steps {
                 script{
                     frontendApp = docker.build("devops-jenkins-frontend", "-f src/frontend/Dockerfile src/frontend")
-                    sh "sudo docker images"
                 }
             }
         }
