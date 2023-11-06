@@ -11,3 +11,12 @@ image:
 
 # Port for the frontend service
 servicePort: 3000
+
+rollout:
+  name: bluegreen
+  activeService: frontend-active
+  previewService: frontend-preview
+
+nodePort:
+  activeService: 31000
+  previewService: 32000

@@ -4,8 +4,6 @@ mongodb:
 
 backend:
   replicaCount: 1
-  name: backend-app
 
 frontend:
   replicaCount: 1
-  name: frontend-app

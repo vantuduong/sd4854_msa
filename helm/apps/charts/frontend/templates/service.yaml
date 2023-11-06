@@ -1,12 +1,26 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: frontend
+  name: {{ .Values.rollout.activeService }}
 spec:
   selector:
     {{- include "app.label" . | nindent 4 }}
   ports:
     - port: {{ .Values.servicePort }}
       protocol: TCP
-      targetPort: {{ .Values.servicePort }}
-  type: ClusterIP
+      nodePort: {{ .Values.nodePort.activeService }}
+  type: NodePort
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.rollout.previewService }}
+spec:
+  selector:
+    {{- include "app.label" . | nindent 4 }}
+  ports:
+    - port: {{ .Values.servicePort }}
+      protocol: TCP
+      nodePort: {{ .Values.nodePort.previewService }}
+  type: NodePort

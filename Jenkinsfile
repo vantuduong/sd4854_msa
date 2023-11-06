@@ -14,7 +14,7 @@ pipeline {
         stage ("Trivy Scan Secret") {
             steps {
                 script {
-                    sh "trivy fs . --scanners secret --exit-code 0 --format template --template @trivy/html.tpl -o .trivy/secretreport.html"
+                    sh "trivy fs --severity HIGH,CRITICAL --format template --template @trivy/html.tpl -o trivy/secretreport.html ."
                     publishHTML (target : [allowMissing: true,
                         alwaysLinkToLastBuild: true,
                         keepAll: true,
