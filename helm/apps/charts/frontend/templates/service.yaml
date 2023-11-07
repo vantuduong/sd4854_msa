@@ -8,10 +8,10 @@ spec:
   selector:
     app: frontend
   ports:
-    - port: {{ .Values.servicePort }}
-      targetPort: http
+    - nodePort: 31000
       protocol: TCP
       name: http
+      port: {{ .Values.servicePort }}
   type: NodePort
 
 ---
@@ -25,8 +25,8 @@ spec:
   selector:
     app: frontend
   ports:
-    - port: {{ .Values.servicePort }}
-      targetPort: http
+    - nodePort: 32000
       protocol: TCP
       name: http
+      port: {{ .Values.servicePort }}
   type: NodePort

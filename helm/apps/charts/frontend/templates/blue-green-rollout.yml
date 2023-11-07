@@ -25,4 +25,6 @@ spec:
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
         imagePullPolicy: Always
         ports:
-          - containerPort: {{ .Values.servicePort }}
+          - name: http
+            containerPort: {{ .Values.servicePort }}
+            protocol: TCP
