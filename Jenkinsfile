@@ -31,6 +31,7 @@ pipeline {
             steps {
                 script{
                     frontendApp = docker.build("devops-jenkins-frontend", "-f src/frontend/Dockerfile src/frontend")
+                    sh "docker images"
                 }
             }
         }
@@ -79,7 +80,7 @@ pipeline {
             steps {
                 script{
                     docker.withRegistry('https://258591199682.dkr.ecr.ap-southeast-1.amazonaws.com', 'ecr:ap-southeast-1:aws-credentials') {
-                        frontendApp.push("latest")
+                        frontendApp.push("blue")
                     }
                 }
             }

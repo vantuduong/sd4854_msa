@@ -2,13 +2,16 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.rollout.activeService }}
+  labels:
+    app: frontend
 spec:
   selector:
-    {{- include "app.label" . | nindent 4 }}
+    app: frontend
   ports:
     - port: {{ .Values.servicePort }}
+      targetPort: http
       protocol: TCP
-      nodePort: {{ .Values.nodePort.activeService }}
+      name: http
   type: NodePort
 
 ---
@@ -16,11 +19,14 @@ apiVersion: v1
 kind: Service
 metadata:
   name: {{ .Values.rollout.previewService }}
+  labels:
+    app: frontend
 spec:
   selector:
-    {{- include "app.label" . | nindent 4 }}
+    app: frontend
   ports:
     - port: {{ .Values.servicePort }}
+      targetPort: http
       protocol: TCP
-      nodePort: {{ .Values.nodePort.previewService }}
+      name: http
   type: NodePort

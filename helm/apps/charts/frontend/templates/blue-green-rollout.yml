@@ -1,8 +1,9 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Rollout
 metadata:
   name: {{ .Values.rollout.name }}
+  labels:
+    app: frontend
 spec:
   replicas: 1
   strategy:
@@ -13,16 +14,15 @@ spec:
   revisionHistoryLimit: 2
   selector:
     matchLabels:
-      {{- include "app.label" . | nindent 4 }}
+      app: frontend
   template:
     metadata:
       labels:
-        {{- include "app.label" . | nindent 4 }}
+        app: frontend
     spec:
       containers:
-      - name: webserver-simple
+      - name: {{ .Values.name }}
         image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: Always
         ports:
-        - name: http
-          containerPort: 3000
-          protocol: TCP
+          - containerPort: {{ .Values.servicePort }}

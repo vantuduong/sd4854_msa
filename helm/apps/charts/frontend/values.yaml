@@ -7,7 +7,7 @@ name: frontend
 # Image repository and tag for the frontend container
 image:
   repository: 258591199682.dkr.ecr.ap-southeast-1.amazonaws.com/devops-jenkins-frontend
-  tag: latest
+  tag: blue
 
 # Port for the frontend service
 servicePort: 3000
